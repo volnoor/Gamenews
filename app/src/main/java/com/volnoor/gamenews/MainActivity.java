@@ -53,16 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
     }
 
 
@@ -81,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_search) {
+            // TODO ask if search needed
             return true;
         }
 
@@ -150,11 +141,11 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return getString(R.string.section_stories);
                 case 1:
-                    return "SECTION 2";
+                    return getString(R.string.section_video);
                 case 2:
-                    return "SECTION 3";
+                    return getString(R.string.section_favourites);
             }
             return null;
         }
