@@ -6,4 +6,7 @@
     <string name="section_stories">Stories</string>
     <string name="section_video">Video</string>
     <string name="section_favourites">Favourites</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
