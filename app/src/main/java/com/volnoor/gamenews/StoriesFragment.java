@@ -89,7 +89,7 @@ public class StoriesFragment extends Fragment {
 
         // News
         RecyclerView rvNews = view.findViewById(R.id.rv_news);
-        ViewCompat.setNestedScrollingEnabled(rvNews, false);
+        ViewCompat.setNestedScrollingEnabled(rvNews, false); // For fling effect
 
         RecyclerView.LayoutManager newsLayoutManager = new LinearLayoutManager(getContext());
         rvNews.setLayoutManager(newsLayoutManager);
