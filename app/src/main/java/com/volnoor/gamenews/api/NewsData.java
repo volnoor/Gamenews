@@ -1,5 +1,8 @@
 package com.volnoor.gamenews.api;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Eugene on 06.10.2017.
  */
 
-public class NewsData {
+public class NewsData implements Parcelable {
     @SerializedName("link")
     @Expose
     private String link;
@@ -55,4 +58,36 @@ public class NewsData {
     public String getCover() {
         return cover;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(link);
+        parcel.writeString(name);
+        parcel.writeLong(date);
+        parcel.writeString(cover);
+    }
+
+    protected NewsData(Parcel in) {
+        link = in.readString();
+        name = in.readString();
+        date = in.readLong();
+        cover = in.readString();
+    }
+
+    public static final Creator<NewsData> CREATOR = new Creator<NewsData>() {
+        @Override
+        public NewsData createFromParcel(Parcel in) {
+            return new NewsData(in);
+        }
+
+        @Override
+        public NewsData[] newArray(int size) {
+            return new NewsData[size];
+        }
+    };
 }

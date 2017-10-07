@@ -30,11 +30,11 @@ import retrofit2.Response;
 public class StoriesFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
 
-    private List<NewsData> news = new ArrayList<>();
-    private NewsAdapter newsAdapter;
-
-    private List<NewsData> topNews = new ArrayList<>();
+    private ArrayList<NewsData> topNews = new ArrayList<>();
     private TopNewsAdapter topNewsAdapter;
+
+    private ArrayList<NewsData> news = new ArrayList<>();
+    private NewsAdapter newsAdapter;
 
     private LinearLayout llPageIndicator;
     private int pageIndicatorPosition;
@@ -56,6 +56,7 @@ public class StoriesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_stories, container, false);
 
         TextView tvTop = view.findViewById(R.id.tv_top);
@@ -97,10 +98,31 @@ public class StoriesFragment extends Fragment {
         newsAdapter = new NewsAdapter(getContext(), news);
         rvNews.setAdapter(newsAdapter);
 
-        loadNews();
+        if (savedInstanceState != null
+                && savedInstanceState.containsKey(getString(R.string.top_news_key))
+                && savedInstanceState.containsKey(getString(R.string.news_key))) {
 
-        // Inflate the layout for this fragment
+            ArrayList<NewsData> savedTopNews = savedInstanceState.getParcelableArrayList(getString(R.string.top_news_key));
+            ArrayList<NewsData> savedNews = savedInstanceState.getParcelableArrayList(getString(R.string.news_key));
+            topNews.addAll(savedTopNews);
+            news.addAll(savedNews);
+
+            topNewsAdapter.notifyDataSetChanged();
+            newsAdapter.notifyDataSetChanged();
+
+            setupPageIndicator(topNews.size());
+        } else {
+            loadNews();
+        }
+
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(getString(R.string.top_news_key), topNews);
+        outState.putParcelableArrayList(getString(R.string.news_key), news);
+        super.onSaveInstanceState(outState);
     }
 
     private void loadNews() {
@@ -113,13 +135,13 @@ public class StoriesFragment extends Fragment {
                 if (response.isSuccessful()) {
                     List<NewsData> newsDataList = response.body();
 
-                    news.addAll(newsDataList);
                     topNews.addAll(newsDataList);
+                    news.addAll(newsDataList);
 
-                    newsAdapter.notifyDataSetChanged();
                     topNewsAdapter.notifyDataSetChanged();
+                    newsAdapter.notifyDataSetChanged();
 
-                    setupPageIndicator(newsDataList.size());
+                    setupPageIndicator(topNews.size());
                 }
             }
 
