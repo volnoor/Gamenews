@@ -51,7 +51,7 @@ public class StoriesFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        newsAdapter = new NewsAdapter(news);
+        newsAdapter = new NewsAdapter(getContext(), news);
         recyclerView.setAdapter(newsAdapter);
 
         loadNews();
