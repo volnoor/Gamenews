@@ -20,6 +20,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" />
 
+            <LinearLayout
+                android:background="@color/colorPrimaryDark"
+                android:id="@+id/ll_page_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:orientation="horizontal" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_news"
                 android:layout_width="match_parent"
@@ -28,7 +36,6 @@
                 tools:listitem="@layout/recycler_view_news_row" />
 
         </LinearLayout>
-
 
     </ScrollView>
 

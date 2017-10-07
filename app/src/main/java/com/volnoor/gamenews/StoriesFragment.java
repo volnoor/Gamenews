@@ -3,11 +3,14 @@ package com.volnoor.gamenews;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.volnoor.gamenews.adapter.NewsAdapter;
 import com.volnoor.gamenews.adapter.TopNewsAdapter;
@@ -30,6 +33,9 @@ public class StoriesFragment extends Fragment {
 
     private List<NewsData> topNews = new ArrayList<>();
     private TopNewsAdapter topNewsAdapter;
+
+    private LinearLayout llPageIndicator;
+    private int pageIndicatorPosition;
 
     public StoriesFragment() {
         // Required empty public constructor
@@ -58,6 +64,23 @@ public class StoriesFragment extends Fragment {
 
         topNewsAdapter = new TopNewsAdapter(getContext(), topNews);
         rvTopNews.setAdapter(topNewsAdapter);
+
+        // add pager behavior
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(rvTopNews);
+
+        llPageIndicator = view.findViewById(R.id.ll_page_indicator);
+
+        rvTopNews.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int pos = ((LinearLayoutManager) (recyclerView.getLayoutManager())).findFirstVisibleItemPosition();
+                updatePageIndicator(pos);
+                Log.d("TAG", "" + pos);
+            }
+        });
+
 
         // News
         RecyclerView rvNews = view.findViewById(R.id.rv_news);
@@ -89,6 +112,8 @@ public class StoriesFragment extends Fragment {
 
                     newsAdapter.notifyDataSetChanged();
                     topNewsAdapter.notifyDataSetChanged();
+
+                    setupPageIndicator(newsDataList.size());
                 }
             }
 
@@ -97,5 +122,30 @@ public class StoriesFragment extends Fragment {
                 Log.d(TAG, t.getMessage());
             }
         });
+    }
+
+    private void updatePageIndicator(int position) {
+        ((ImageView) llPageIndicator.getChildAt(pageIndicatorPosition)).setImageResource(R.drawable.indicator); // Deselect
+        ((ImageView) llPageIndicator.getChildAt(position)).setImageResource(R.drawable.indicator_selected); // Select
+
+        pageIndicatorPosition = position;
+    }
+
+    private void setupPageIndicator(int numberOfPages) {
+        for (int i = 0; i < numberOfPages; i++) {
+            ImageView image = new ImageView(getContext());
+            image.setImageResource(R.drawable.indicator);
+
+            int size = getResources().getDimensionPixelSize(R.dimen.indicator_size);
+            int margin = getResources().getDimensionPixelSize(R.dimen.indicator_margin);
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(size, size);
+            layoutParams.setMargins(margin, margin, margin, margin);
+            image.setLayoutParams(layoutParams);
+
+            llPageIndicator.addView(image);
+        }
+
+        ((ImageView) llPageIndicator.getChildAt(0)).setImageResource(R.drawable.indicator_selected);
     }
 }
