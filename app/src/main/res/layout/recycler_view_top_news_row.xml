@@ -20,6 +20,9 @@
                 tools:src="@mipmap/ic_launcher" />
 
             <TextView
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:textSize="34sp"
                 android:id="@+id/tv_top_news_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,16 +33,17 @@
                 android:id="@+id/tv_top_news_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/iv_top_news_cover"
                 tools:text="Link" />
 
             <TextView
                 android:id="@+id/tv_top_news_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@id/tv_news_link"
-                android:layout_toRightOf="@id/tv_news_link"
+                android:layout_alignBaseline="@id/tv_top_news_link"
+                android:layout_alignParentBottom="true"
+                android:layout_toEndOf="@+id/tv_top_news_link"
+                android:layout_toRightOf="@+id/tv_top_news_link"
                 tools:text="Date" />
 
         </RelativeLayout>
