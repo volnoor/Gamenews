@@ -2,6 +2,7 @@ package com.volnoor.gamenews;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -84,6 +85,7 @@ public class StoriesFragment extends Fragment {
 
         // News
         RecyclerView rvNews = view.findViewById(R.id.rv_news);
+        ViewCompat.setNestedScrollingEnabled(rvNews, false);
 
         RecyclerView.LayoutManager newsLayoutManager = new LinearLayoutManager(getContext());
         rvNews.setLayoutManager(newsLayoutManager);
