@@ -1,16 +1,15 @@
-package com.volnoor.gamenews;
+package com.volnoor.gamenews.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.volnoor.gamenews.R;
 import com.volnoor.gamenews.api.NewsData;
 
 import java.net.URI;
@@ -20,27 +19,27 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Eugene on 06.10.2017.
+ * Created by Eugene on 07.10.2017.
  */
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
-    private List<NewsData> news;
+public class TopNewsAdapter extends RecyclerView.Adapter<TopNewsAdapter.ViewHolder> {
+    private List<NewsData> topNews;
     private Context context;
 
-    public NewsAdapter(Context context, List<NewsData> news) {
+    public TopNewsAdapter(Context context, List<NewsData> topNews) {
         this.context = context;
-        this.news = news;
+        this.topNews = topNews;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_news_row, parent, false);
-        return new ViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_top_news_row, parent, false);
+        return new TopNewsAdapter.ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        NewsData n = news.get(position);
+        NewsData n = topNews.get(position);
 
         // Name
         holder.name.setText(n.getName());
@@ -59,14 +58,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         }
 
         // Date
-        Date date = new Date(n.getDate() * 1000); // Date is need to be in milliseconds
+        Date date = new Date(n.getDate() * 1000); // Date needs to be in milliseconds
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
         holder.date.setText(dateFormat.format(date));
     }
 
     @Override
     public int getItemCount() {
-        return news.size();
+        return topNews.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -78,10 +77,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.tv_news_name);
-            cover = itemView.findViewById(R.id.iv_news_cover);
-            link = itemView.findViewById(R.id.tv_news_link);
-            date = itemView.findViewById(R.id.tv_news_date);
+            name = itemView.findViewById(R.id.tv_top_news_name);
+            cover = itemView.findViewById(R.id.iv_top_news_cover);
+            link = itemView.findViewById(R.id.tv_top_news_link);
+            date = itemView.findViewById(R.id.tv_top_news_date);
         }
     }
 }

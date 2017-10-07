@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.volnoor.gamenews.adapter.NewsAdapter;
+import com.volnoor.gamenews.adapter.TopNewsAdapter;
 import com.volnoor.gamenews.api.NewsClient;
 import com.volnoor.gamenews.api.NewsData;
 import com.volnoor.gamenews.api.NewsService;
@@ -25,6 +27,9 @@ public class StoriesFragment extends Fragment {
 
     private List<NewsData> news = new ArrayList<>();
     private NewsAdapter newsAdapter;
+
+    private List<NewsData> topNews = new ArrayList<>();
+    private TopNewsAdapter topNewsAdapter;
 
     public StoriesFragment() {
         // Required empty public constructor
@@ -43,16 +48,25 @@ public class StoriesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_stories, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.rv_news);
+        // Top news
+        RecyclerView rvTopNews = view.findViewById(R.id.rv_top_news);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        LinearLayoutManager topNewsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvTopNews.setLayoutManager(topNewsLayoutManager);
+
+        topNewsAdapter = new TopNewsAdapter(getContext(), topNews);
+        rvTopNews.setAdapter(topNewsAdapter);
+
+        // News
+        RecyclerView rvNews = view.findViewById(R.id.rv_news);
+
+        RecyclerView.LayoutManager newsLayoutManager = new LinearLayoutManager(getContext());
+        rvNews.setLayoutManager(newsLayoutManager);
 
         newsAdapter = new NewsAdapter(getContext(), news);
-        recyclerView.setAdapter(newsAdapter);
+        rvNews.setAdapter(newsAdapter);
 
         loadNews();
 
@@ -68,9 +82,13 @@ public class StoriesFragment extends Fragment {
             @Override
             public void onResponse(Call<List<NewsData>> call, Response<List<NewsData>> response) {
                 if (response.isSuccessful()) {
-                    news.addAll(response.body());
+                    List<NewsData> newsDataList = response.body();
+
+                    news.addAll(newsDataList);
+                    topNews.addAll(newsDataList);
 
                     newsAdapter.notifyDataSetChanged();
+                    topNewsAdapter.notifyDataSetChanged();
                 }
             }
 
