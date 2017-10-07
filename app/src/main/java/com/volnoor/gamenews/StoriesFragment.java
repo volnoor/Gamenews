@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.volnoor.gamenews.adapter.NewsAdapter;
 import com.volnoor.gamenews.adapter.TopNewsAdapter;
@@ -56,6 +57,9 @@ public class StoriesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stories, container, false);
+
+        TextView tvTop = view.findViewById(R.id.tv_top);
+        tvTop.setTypeface(TypeFaceProvider.getTypeFace(getContext(), "roboto-bold"));
 
         // Top news
         RecyclerView rvTopNews = view.findViewById(R.id.rv_top_news);

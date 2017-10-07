@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.volnoor.gamenews.R;
+import com.volnoor.gamenews.TypeFaceProvider;
 import com.volnoor.gamenews.api.NewsData;
 
 import java.net.URI;
@@ -34,7 +35,7 @@ public class TopNewsAdapter extends RecyclerView.Adapter<TopNewsAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_top_news_row, parent, false);
-        return new TopNewsAdapter.ViewHolder(v);
+        return new TopNewsAdapter.ViewHolder(v, context);
     }
 
     @Override
@@ -74,13 +75,18 @@ public class TopNewsAdapter extends RecyclerView.Adapter<TopNewsAdapter.ViewHold
         public TextView link;
         public TextView date;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, Context context) {
             super(itemView);
 
             name = itemView.findViewById(R.id.tv_top_news_name);
             cover = itemView.findViewById(R.id.iv_top_news_cover);
             link = itemView.findViewById(R.id.tv_top_news_link);
             date = itemView.findViewById(R.id.tv_top_news_date);
+
+            // Set font
+            name.setTypeface(TypeFaceProvider.getTypeFace(context, "roboto-bold"));
+            link.setTypeface(TypeFaceProvider.getTypeFace(context, "roboto-bold"));
+            date.setTypeface(TypeFaceProvider.getTypeFace(context, "geometria-medium"));
         }
     }
 }

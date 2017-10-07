@@ -29,6 +29,7 @@
                 android:orientation="horizontal" />
 
             <TextView
+                android:id="@+id/tv_top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -38,8 +39,10 @@
                 android:drawableLeft="@drawable/ic_whatshot_black_24dp"
                 android:drawableStart="@drawable/ic_whatshot_black_24dp"
                 android:gravity="center"
+                android:padding="5dp"
                 android:text="@string/top"
-                android:textColor="#212020" />
+                android:textColor="#212020"
+                android:textSize="24sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_news"
