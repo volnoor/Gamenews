@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.volnoor.gamenews.R;
 import com.volnoor.gamenews.TypeFaceProvider;
@@ -39,16 +41,27 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         NewsData n = news.get(position);
 
         // Name
         holder.name.setText(n.getName());
 
         // Cover
+        holder.progressBar.setVisibility(View.VISIBLE); // Enable progressbar while image is being loaded
         Picasso.with(context)
                 .load(n.getCover())
-                .into(holder.cover);
+                .into(holder.cover, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.progressBar.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        holder.progressBar.setVisibility(View.INVISIBLE);
+                    }
+                });
 
         // Link
         try {
@@ -74,6 +87,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         public ImageView cover;
         public TextView link;
         public TextView date;
+        public ProgressBar progressBar;
 
         public ViewHolder(View itemView, Context context) {
             super(itemView);
@@ -82,6 +96,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             cover = itemView.findViewById(R.id.iv_news_cover);
             link = itemView.findViewById(R.id.tv_news_link);
             date = itemView.findViewById(R.id.tv_news_date);
+            progressBar = itemView.findViewById(R.id.pb_news);
 
             // Set font
             name.setTypeface(TypeFaceProvider.getTypeFace(context, "roboto-bold"));

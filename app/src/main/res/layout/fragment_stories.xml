@@ -24,6 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_below="@id/rv_top_news"
+                android:layout_marginBottom="@dimen/news_padding"
                 android:background="@color/colorPrimaryDark"
                 android:gravity="center"
                 android:orientation="horizontal" />

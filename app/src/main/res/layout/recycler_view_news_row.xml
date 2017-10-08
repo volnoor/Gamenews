@@ -21,6 +21,13 @@
                 android:scaleType="centerCrop"
                 tools:src="@mipmap/ic_launcher" />
 
+            <ProgressBar
+                android:id="@+id/pb_news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="invisible" />
+
             <TextView
                 android:id="@+id/tv_news_name"
                 android:layout_width="match_parent"

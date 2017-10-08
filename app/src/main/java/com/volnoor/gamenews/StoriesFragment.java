@@ -100,7 +100,9 @@ public class StoriesFragment extends Fragment {
 
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(getString(R.string.top_news_key))
-                && savedInstanceState.containsKey(getString(R.string.news_key))) {
+                && savedInstanceState.containsKey(getString(R.string.news_key))
+                && topNews.isEmpty()
+                && news.isEmpty()) {
 
             ArrayList<NewsData> savedTopNews = savedInstanceState.getParcelableArrayList(getString(R.string.top_news_key));
             ArrayList<NewsData> savedNews = savedInstanceState.getParcelableArrayList(getString(R.string.news_key));
