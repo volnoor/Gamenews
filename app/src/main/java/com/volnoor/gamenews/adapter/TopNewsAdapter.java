@@ -99,9 +99,9 @@ public class TopNewsAdapter extends RecyclerView.Adapter<TopNewsAdapter.ViewHold
             progressBar = itemView.findViewById(R.id.pb_top_news);
 
             // Set font
-            name.setTypeface(TypeFaceProvider.getTypeFace(context, "roboto-bold"));
-            link.setTypeface(TypeFaceProvider.getTypeFace(context, "roboto-bold"));
-            date.setTypeface(TypeFaceProvider.getTypeFace(context, "geometria-medium"));
+            name.setTypeface(TypeFaceProvider.getTypeFace(context, context.getString(R.string.font_roboto)));
+            link.setTypeface(TypeFaceProvider.getTypeFace(context, context.getString(R.string.font_roboto)));
+            date.setTypeface(TypeFaceProvider.getTypeFace(context, context.getString(R.string.font_geometria)));
         }
     }
 }

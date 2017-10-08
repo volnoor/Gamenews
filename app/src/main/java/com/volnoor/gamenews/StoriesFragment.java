@@ -6,7 +6,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +27,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class StoriesFragment extends Fragment {
-    private final String TAG = getClass().getSimpleName();
-
     private ArrayList<NewsData> topNews = new ArrayList<>();
     private TopNewsAdapter topNewsAdapter;
 
@@ -60,7 +57,7 @@ public class StoriesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_stories, container, false);
 
         TextView tvTop = view.findViewById(R.id.tv_top);
-        tvTop.setTypeface(TypeFaceProvider.getTypeFace(getContext(), "roboto-bold"));
+        tvTop.setTypeface(TypeFaceProvider.getTypeFace(getContext(), getContext().getString(R.string.font_roboto)));
 
         // Top news
         RecyclerView rvTopNews = view.findViewById(R.id.rv_top_news);
@@ -71,7 +68,7 @@ public class StoriesFragment extends Fragment {
         topNewsAdapter = new TopNewsAdapter(getContext(), topNews);
         rvTopNews.setAdapter(topNewsAdapter);
 
-        // add pager behavior
+        // Add pager behavior for top news recycler viw
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(rvTopNews);
 
@@ -83,10 +80,8 @@ public class StoriesFragment extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
                 int pos = ((LinearLayoutManager) (recyclerView.getLayoutManager())).findFirstVisibleItemPosition();
                 updatePageIndicator(pos);
-                Log.d("TAG", "" + pos);
             }
         });
-
 
         // News
         RecyclerView rvNews = view.findViewById(R.id.rv_news);
@@ -98,6 +93,7 @@ public class StoriesFragment extends Fragment {
         newsAdapter = new NewsAdapter(getContext(), news);
         rvNews.setAdapter(newsAdapter);
 
+        // Load from savedInstanceState if screen was rotated
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(getString(R.string.top_news_key))
                 && savedInstanceState.containsKey(getString(R.string.news_key))
@@ -149,11 +145,11 @@ public class StoriesFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<NewsData>> call, Throwable t) {
-                Log.d(TAG, t.getMessage());
             }
         });
     }
 
+    // Used when top news recycler view is scrolled
     private void updatePageIndicator(int position) {
         ((ImageView) llPageIndicator.getChildAt(pageIndicatorPosition)).setImageResource(R.drawable.indicator); // Deselect
         ((ImageView) llPageIndicator.getChildAt(position)).setImageResource(R.drawable.indicator_selected); // Select
