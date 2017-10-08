@@ -12,4 +12,5 @@
     <string name="news_key">news</string>
     <string name="font_roboto">roboto-bold</string>
     <string name="font_geometria">geometria-medium</string>
+    <string name="no_connection">No Internet connection</string>
 </resources>

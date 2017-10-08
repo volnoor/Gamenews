@@ -1,5 +1,8 @@
 package com.volnoor.gamenews;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.volnoor.gamenews.adapter.NewsAdapter;
 import com.volnoor.gamenews.adapter.TopNewsAdapter;
@@ -110,7 +114,15 @@ public class StoriesFragment extends Fragment {
 
             setupPageIndicator(topNews.size());
         } else {
-            loadNews();
+            // Check Internet connection
+            ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+            if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+                loadNews();
+            } else {
+                Toast.makeText(getContext(), R.string.no_connection, Toast.LENGTH_SHORT).show();
+            }
         }
 
         return view;
